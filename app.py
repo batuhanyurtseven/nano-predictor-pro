@@ -3,7 +3,7 @@ import pandas as pd
 import altair as alt
 
 # --- 1. PAGE CONFIG ---
-st.set_page_config(page_title="Nano-Predictor Pro v37", layout="wide")
+st.set_page_config(page_title="Nano-Predictor Pro v1.0", layout="wide")
 
 # --- 2. FULL ACADEMIC LANGUAGE PACK (PROFESSIONAL TONE) ---
 LANGUAGES = {
@@ -132,14 +132,14 @@ def run_calc(target, size, zeta, peg, aff):
     renal = (85.0 - (size * 2)) if size <= 15 else (30.0 - size if size <= 30 else 2.0)
     renal = max(0.0, min(total, renal))
     
-    # Makrofaj Tutulumu (MPS) - Daha sıkı hale getirildi
+    # Makrofaj Tutulumu (MPS) 
     res = max(5.0, min((total-renal)*0.95, (total-renal)*0.45 + abs(zeta)*1.8 - peg*10.0))
     
     # Biyoyararlanım - Pasif sızma çok kısıtlı (0.05), Afinite anahtar faktör
     base_leakage = 0.05 
     acc = (total - renal - res) * (base_leakage + (abs(aff) * 0.04))
     
-    # Fiziksel Bariyer Cezaları (Çok daha sert)
+    # Fiziksel Bariyer Cezaları 
     if "BBB" in target and size > 90: acc *= 0.05
     elif "EPR" in target and size > 180: acc *= 0.1
     
@@ -206,7 +206,7 @@ with t_sim:
     st.altair_chart(c, use_container_width=True)
     
     st.divider()
-    # V37 - DAHA SIKI VE LİTERATÜRE UYGUN BAŞARI EŞİĞİ
+    # V37 - BAŞARI EŞİĞİ
     if tr >= 25.0 and rn <= 15.0 and rs <= 30.0:
         st.success(L["status_success"])
     else:
